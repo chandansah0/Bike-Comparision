@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>WiselyWheel</title>
+    <style>
+      .hero {
+        text-align: center;
+        padding: 3%;
+        background-color: #fff;
+        margin-top: 2rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-bar {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #bikeSearchInput {
+        padding: 0.5rem; /* Adjust the padding */
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+        width: 20%; /* Adjust the width */
+        font-size: 17px; /* Adjust the font size */
+      }
+
+      #searchButton {
+        padding: 0.5rem 1rem;
+        background-color: rgb(36, 201, 36);
+        color: #fff;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 18px; /* Adjust the font size */
+        transition: background-color 0.3s ease;
+      }
+
+      #searchButton:hover {
+        background-color: Green;
+      }
+
+      .popular-bikes-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      .box {
+        width: 100px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .box:hover {
+        transform: translateY(-5px);
+      }
+
+      .box-img img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      .box-info {
+        padding: 20px;
+        font-size: 22px;
+      }
+
+      .box-info h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 22px;
+      }
+
+      .box-info p {
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 21px;
+        color: black;
+      }
+      .box-info a {
+        display: block;
+        text-align: center;
+        padding: 10px;
+        background-color: #333;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+      .box-info a:hover {
+        background-color: #555;
+      }
+      .Brand-Container {
+        text-align: center;
+      }
+
+      .brand-options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .brand-options .option {
+        margin-right: 20px;
+      }
+
+      .brand-img {
+        width: 150px;
+        height: auto;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .brand-img:hover {
+        transform: scale(1.1);
+      }
+
+      .brand-search-results-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+
+      .brand-search-results-container .box {
+        width: 300px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .brand-search-results-container .box:hover {
+        transform: translateY(-5px);
+      }
+
+      .brand-search-results-container .box-img img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      .brand-search-results-container .box-info {
+        padding: 20px;
+      }
+
+      .brand-search-results-container .box-info h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 20px;
+      }
+
+      .brand-search-results-container .box-info p {
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 22px;
+        color: black;
+      }
+
+      .brand-search-results-container .box-info a {
+        display: block;
+        text-align: center;
+        padding: 10px;
+        background-color: #333;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .brand-search-results-container .box-info a:hover {
+        background-color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img
+        src="/image/logo.png"
+        alt="WiselyWheel"
+        width="200rem"
+        height="150rem"
+      />
+      <nav>
+        <ul>
+          <li><a href="/index">Home</a></li>
+          <li><a href="/browse">Browse Bikes</a></li>
+          <li><a href="/compare">Compare Bikes</a></li>
+          <li><a href="/aboutus">About Us</a></li>
+          <li><a href="#" onclick="confirmLogout()">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Discover and Compare Your Perfect Ride</h1>
+      <div class="search-bar">
+        <input
+          type="text"
+          id="bikeSearchInput"
+          placeholder="Search your bike here"
+        />
+        <button id="searchButton">Search</button>
+      </div>
+      <!-- Add the search results div here -->
+      <div id="searchResults"></div>
+    </section>
+    <section class="popular-bikes-container">
+      <h2>Popular Bikes</h2>
+      <% bikeRankings.slice(0, 5).forEach((bikeRanking, index) => { %>
+      <div class="box">
+        <div class="box-img">
+          <img
+            src="<%= bikeRanking.bike.url %>"
+            alt="<%= bikeRanking.bike.variant_name %>"
+          />
+        </div>
+        <div class="box-info">
+          <h3><%= index + 1 %>. <%= bikeRanking.bike.variant_name %></h3>
+          <h5>
+            Rating: <%= bikeRanking.averageRating.toFixed(1) %> | Total Ratings:
+            <%= bikeRanking.totalRatings %>
+          </h5>
+          <p><strong>Brand:</strong> <%= bikeRanking.bike.brand %></p>
+          <p><strong>Price:</strong> <%= bikeRanking.bike.price %></p>
+          <a href="/bikeDetails?id=<%= bikeRanking.bike._id %>">View Details</a>
+        </div>
+      </div>
+      <% }); %>
+    </section>
+
+    <section class="Brand-Container">
+      <h2>Brand</h2>
+      <div class="brand-options">
+        <div class="option">
+          <img
+            src="/image/honda.png"
+            alt="Honda"
+            class="brand-img"
+            onclick="loadBikesByBrand('Honda')"
+          />
+        </div>
+        <div class="option">
+          <img
+            src="/image/yamaha.png"
+            alt="Yamaha"
+            class="brand-img"
+            onclick="loadBikesByBrand('Yamaha')"
+          />
+        </div>
+        <div class="option">
+          <img
+            src="/image/bajaj.png"
+            alt="Bajaj"
+            class="brand-img"
+            onclick="loadBikesByBrand('Bajaj')"
+          />
+        </div>
+        <div class="option">
+          <img
+            src="/image/Royal.png"
+            alt="Royal"
+            class="brand-img"
+            onclick="loadBikesByBrand('Royal Enfield')"
+          />
+        </div>
+        <div class="option">
+          <img
+            src="/image/TVS.png"
+            alt="TVS"
+            class="brand-img"
+            onclick="loadBikesByBrand('TVS')"
+          />
+        </div>
+      </div>
+
+      <!-- Brand search results -->
+      <section class="brand-search-results-container" id="brandSearchResults">
+        <!-- Search results will be displayed here -->
+      </section>
+    </section>
+    <script>
+      function loadBikesByBrand(brand) {
+        fetch(`/api/bikefeatures/brand/${brand}`)
+          .then((response) => response.json())
+          .then((bikes) => {
+            displayBikes(bikes);
+          })
+          .catch((error) =>
+            console.error("Error loading bikes by brand:", error)
+          );
+      }
+
+      function displayBikes(bikes) {
+        const brandSearchResults =
+          document.getElementById("brandSearchResults");
+        brandSearchResults.innerHTML = ""; // Clear previous search results
+
+        bikes.forEach((bike) => {
+          const bikeItem = document.createElement("div");
+          bikeItem.classList.add("box");
+
+          const imageDiv = document.createElement("div");
+          imageDiv.classList.add("box-img");
+          const bikeImage = document.createElement("img");
+          bikeImage.src = bike.url;
+          bikeImage.alt = bike.variant_name;
+          imageDiv.appendChild(bikeImage);
+
+          const infoDiv = document.createElement("div");
+          infoDiv.classList.add("box-info");
+          const bikeName = document.createElement("h3");
+          bikeName.textContent = bike.variant_name;
+          const bikeBrand = document.createElement("p");
+          bikeBrand.innerHTML = `<strong>Brand:</strong> ${bike.brand}`;
+          const bikePrice = document.createElement("p");
+          bikePrice.innerHTML = `<strong>Price:</strong> ${bike.price}`;
+          const viewDetailsLink = document.createElement("a");
+          viewDetailsLink.href = `/bikeDetails?id=${bike._id}`;
+          viewDetailsLink.textContent = "View Details";
+
+          infoDiv.appendChild(bikeName);
+          infoDiv.appendChild(bikeBrand);
+          infoDiv.appendChild(bikePrice);
+          infoDiv.appendChild(viewDetailsLink);
+
+          bikeItem.appendChild(imageDiv);
+          bikeItem.appendChild(infoDiv);
+
+          brandSearchResults.appendChild(bikeItem);
+        });
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchButton = document.getElementById("searchButton");
+
+        searchButton.addEventListener("click", function (event) {
+          event.preventDefault();
+          const searchTerm = document
+            .getElementById("bikeSearchInput")
+            .value.trim()
+            .toLowerCase();
+
+          // Redirect to the search results page with the search term
+          window.location.href = `/searchResults?searchTerm=${searchTerm}`;
+        });
+      });
+      function confirmLogout() {
+        var username = "<%= username %>";
+        if (confirm("Are you sure you want to logout, " + username + "?")) {
+          window.location.href = "/";
+        } else {
+          alert("Thanks for staying");
+          return false;
+        }
+      }
+    </script>
+    <footer>
+      <p>&copy; 2024 WiselyWheel. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

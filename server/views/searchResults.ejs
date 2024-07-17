@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Search Results</title>
+  </head>
+  <style>
+    /* CSS styles for the search button */
+    #searchForm {
+      text-align: center;
+      margin-bottom: 3mm;
+    }
+    .search-bar {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #bikeSearchInput {
+      padding: 0.5rem; /* Adjust the padding */
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+      width: 20%; /* Adjust the width */
+      font-size: 17px; /* Adjust the font size */
+    }
+
+    #searchButton {
+      padding: 0.5rem 1rem;
+      background-color: rgb(36, 201, 36);
+      color: #fff;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      font-size: 18px; /* Adjust the font size */
+      transition: background-color 0.3s ease;
+    }
+
+    /* CSS styles for the brand logo */
+    #brandLogo {
+      display: none;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    #brandLogo img {
+      width: 100px;
+      height: auto;
+    }
+
+    /* CSS styles for search result boxes */
+    .search-results {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .bike-box {
+      margin: 10px;
+      padding: 10px;
+      width: 250px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      background-color: #fff;
+    }
+
+    .bike-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .bike-box img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .bike-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .bike-price {
+      font-size: 16px;
+      color: black;
+    }
+  </style>
+  <body>
+    <header>
+      <img
+        src="/image/logo.png"
+        alt="WiselyWheel"
+        width="150mm"
+        height="100mm"
+      />
+      <nav>
+        <ul>
+          <li><a href="/index">Home</a></li>
+          <li><a href="/browse">Browse Bikes</a></li>
+          <li><a href="/compare">Compare Bikes</a></li>
+          <li><a href="/aboutus">About Us</a></li>
+          <li><a href="#" onclick="confirmLogout()">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <h1>Search Results</h1>
+
+    <!-- Search form for searching another bike -->
+    <form id="searchForm">
+      <input
+        type="text"
+        id="bikeSearchInput"
+        placeholder="Search another bike"
+      />
+      <button type="submit" id="searchButton">Search</button>
+    </form>
+
+    <!-- Brand logo section -->
+    <div id="brandLogo"></div>
+
+    <!-- Search results section -->
+    <section class="search-results">
+      <% searchResults.forEach(bike => { %>
+      <div class="bike-box">
+        <a href="/bikeDetails?id=<%= bike._id %>">
+          <img src="<%= bike.url %>" alt="<%= bike.variant_name %>" />
+          <div class="bike-info">
+            <span class="bike-name"
+              ><%= bike.variant_name %> - <%= bike.brand %>
+            </span>
+            <br /><span class="bike-price">Rs <%= bike.price %></span>
+          </div>
+        </a>
+      </div>
+      <% }); %>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 WiselyWheel. All rights reserved.</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchForm = document.getElementById("searchForm");
+        const searchButton = document.getElementById("searchButton");
+      
+        searchForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const searchTerm = document
+            .getElementById("bikeSearchInput")
+            .value.trim()
+            .toLowerCase();
+
+          
+
+          // Redirect to search results page
+          window.location.href = `/searchResults?searchTerm=${searchTerm}`;
+        });
+      });
+      function confirmLogout() {
+        var username = "<%= username %>";
+        if (confirm("Are you sure you want to logout, " + username + "?")) {
+          window.location.href = "/";
+        } else {
+          alert("Thanks for staying");
+          return false;
+        }
+      }
+    </script>
+  </body>
+</html>
